@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-fs.readFile("./csvInput/pfwtimes.csv", 'utf8', function (err,data) {
+fs.readFile("./csvInput/pfwtimesfull.csv", 'utf8', function (err,data) {
   if (err) {
     return console.log(err);
   }
@@ -33,7 +33,7 @@ fs.readFile("./csvInput/pfwtimes.csv", 'utf8', function (err,data) {
 		    } else if (data['ROW TYPE'] === 'TASK'){
 		      currentTask = data['JOBCOMPLETE'];
 		      currentTaskOrder = data['TASKTITLE']
-		    } else if (data['ROW TYPE'] === 'TIME RECORD' && currentProjectActive === 'Active'){
+		    } else if (data['ROW TYPE'] === 'TIME RECORD'){
 		      data['TRACKERNOTES'] = data['TRACKERTIMESPENT'];
 		      data['TRACKERTIMESPENT'] = data['TRACKERSTARTED'];
 		      data['TRACKERSTARTED'] = data['TRACKERSTOPPED'];
@@ -67,7 +67,7 @@ fs.readFile("./csvInput/pfwtimes.csv", 'utf8', function (err,data) {
 		    console.log(output[output.length-1]);
 		    console.log("Number of Records: " + count);
 		    var outputStream = fastcsv.createWriteStream({headers: true}),
-		      writableStream = fs.createWriteStream("./csvOutput/timesOutput.csv");
+		      writableStream = fs.createWriteStream("./csvOutput/timesfullOutput.csv");
 
 		    outputStream.pipe(writableStream);
 		    for (var row in output) {

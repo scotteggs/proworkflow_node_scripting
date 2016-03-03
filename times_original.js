@@ -15,7 +15,7 @@ var currentProjectActive;
 var count = 0;
 
 
-fs.createReadStream('./csvInput/pfwtimes.csv')
+fs.createReadStream('./csvInput/pfwtimesfull.csv')
   .pipe(stream)
   .on('data', function(data) {
     if(data['ROW TYPE'] === 'PROJECT') {
