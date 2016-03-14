@@ -83,11 +83,25 @@ fs.readFile("./csvInput/pfwtimes.csv", 'utf8', function (err,data) {
 
 		  })
 		  .on('end', function () {
+
+
+		    function compare(a,b) {
+  				if (a.TASKID < b.TASKID)
+    				return -1;
+  			else if (a.TASKID > b.TASKID)
+    			return 1;
+  			else 
+    			return 0;
+				}
+
+				output.sort(compare);
+
 		  	for (let i = 5000; i < 5500; i++) {
 		  			console.log(output[i]);
 		  	}
 		  	console.log(output[output.length-1]);
 		    console.log("Number of Records: " + count);
+
 		    var outputStream = fastcsv.createWriteStream({headers: true}),
 		      writableStream = fs.createWriteStream("./csvOutput/timesOutput.csv");
 
