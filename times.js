@@ -1,6 +1,7 @@
+"use strict";
 var fs = require('fs');
 
-fs.readFile("./csvInput/pfwtimesfull.csv", 'utf8', function (err,data) {
+fs.readFile("./csvInput/pfwtimes.csv", 'utf8', function (err,data) {
   if (err) {
     return console.log(err);
   }
@@ -17,8 +18,11 @@ fs.readFile("./csvInput/pfwtimesfull.csv", 'utf8', function (err,data) {
 		})
 
 		var output = [];
-		var currentProject;
-		var currentTask;
+		var currentJobID;
+		var currentJobName;
+		var currentJobTitle;
+		var currentTaskPhase;
+		var currentTaskTitle;
 		var currentTaskOrder;
 		var currentProjectActive;
 		var count = 0;
@@ -28,54 +32,68 @@ fs.readFile("./csvInput/pfwtimesfull.csv", 'utf8', function (err,data) {
 		  .pipe(stream)
 		  .on('data', function(data) {
 		    if(data['ROW TYPE'] === 'PROJECT') {
-		      currentProject = data['JOBID'];
+		    	currentTaskPhase = "None";
+		      currentJobID = data['JOBID'];
+		      currentJobName = data['JOBNUMBER'];
+		      currentJobTitle = data['JOBTITLE'];
 		      currentProjectActive = data['JOBCOMPLETE'];
+
 		    } else if (data['ROW TYPE'] === 'TASK'){
-		      currentTask = data['JOBCOMPLETE'];
-		      currentTaskOrder = data['TASKTITLE']
-		    } else if (data['ROW TYPE'] === 'TIME RECORD'){
+		    	if(data['TASKASSIGNEDTO'] === "5") {
+		    		currentTaskPhase = data['JOBTITLE'];
+		    	} else {
+		    		currentTaskTitle = data['JOBTITLE'];
+		      	currentTaskOrder = data['TASKTITLE'];
+		    	}
+
+		    } else if (data['ROW TYPE'] === 'TIME RECORD' && (currentProjectActive == 'Active' || currentProject == '128')){
 		      data['TRACKERNOTES'] = data['TRACKERTIMESPENT'];
 		      data['TRACKERTIMESPENT'] = data['TRACKERSTARTED'];
 		      data['TRACKERSTARTED'] = data['TRACKERSTOPPED'];
 		      data['TRACKERSTOPPED'] = data['TRACKERDATE'];
 		      data['TRACKERDATE'] = data['TRACKERUSER'];
-		      data['TRACKERUSER'] = data['TASKORDER'];
-		      data['TASKTITLE'] = currentTask;
-		      data['TASKORDER'] = currentTaskOrder;
-		      data.PROJECT = currentProject;
-		      data.TASKID = data['PROJECT'] + " - " + data['TASKTITLE'] + " - " + data['TASKORDER'];
+		      data['TRACKERUSER'] = data['TASKPRIORITY'];
+		      data.JOB_ID = currentJobID;
+		      data.JOB_NAME = currentJobName;
+		      data.JOB_TITLE = currentJobTitle;
+		      data.TASK_PHASE = currentTaskPhase;
+		      data.TASK_ORDER = currentTaskOrder;
+		      data.TASK_TITLE = currentTaskTitle;
+		      data.TASKID = data['JOB_ID'] + " | " + data['JOB_NAME'] + " | " + data['JOB_TITLE'] + " | " + data['TASK_ORDER'] + " | " + data['TASK_PHASE'] + " | " + data['TASK_TITLE'];
 		      delete data['PROJECT CATEGORY'];
 		      delete data['JOBNUMBER'];
 		      delete data['JOBID'];
 		      delete data['JOBCOMPLETE'];
 		      delete data[''];
 		      delete data['ACTIVE  COMPLETED'];
+		      delete data['TASKORDER'];
+		      delete data['TASKTITLE'];
+		      delete data['ROW TYPE'];
 		      //actions for adding time duration field
 		      data.DURATION = moment.duration(data['TRACKERTIMESPENT']).asHours();
 		      output.push(data);
 		      count += 1;
+		      output.push(data);
 		    }
 		    // output.push(data);
+
+
+
 		  })
 		  .on('end', function () {
-		    console.log(output[0]);
-		    console.log(output[1]);
-		    console.log(output[2]);
-		    console.log(output[3]);
-
-		    
-		    console.log(output[output.length-1]);
+		  	for (let i = 5000; i < 5500; i++) {
+		  			console.log(output[i]);
+		  	}
+		  	console.log(output[output.length-1]);
 		    console.log("Number of Records: " + count);
 		    var outputStream = fastcsv.createWriteStream({headers: true}),
-		      writableStream = fs.createWriteStream("./csvOutput/timesfullOutput.csv");
+		      writableStream = fs.createWriteStream("./csvOutput/timesOutput.csv");
 
 		    outputStream.pipe(writableStream);
 		    for (var row in output) {
 		      outputStream.write(output[row]);
 		    }
 		  })
-
-
   });
 });
 

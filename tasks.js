@@ -18,7 +18,7 @@ fs.createReadStream('./csvInput/pfwtasks.csv')
   		currentProject = data['JOBID'];
       currentProjectStatus = data['CATEGORY'];
   	} 
- 	  else if(data['ROW TYPE'] === 'TASK' && data['TASKORDER'] === 'Active') {
+ 	  else if(data['ROW TYPE'] === 'TASK') {
       data['TASKDESCRIPTION'] = data['TASKTIMESPENT'];
       data['TASKTIMESPENT'] = data['TASKTIMEALLOCATED'];
       data['TASKTIMEALLOCATED'] = data['TASKDATECOMP'];
