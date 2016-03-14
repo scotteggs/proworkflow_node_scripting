@@ -69,11 +69,13 @@ fs.readFile("./csvInput/pfwtimes.csv", 'utf8', function (err,data) {
 		      delete data['TASKORDER'];
 		      delete data['TASKTITLE'];
 		      delete data['ROW TYPE'];
+		      delete data['JOBTITLE'];
+		      delete data['TASKASSIGNEDTO'];
+		      delete data['TASKPRIORITY'];
 		      //actions for adding time duration field
 		      data.DURATION = moment.duration(data['TRACKERTIMESPENT']).asHours();
 		      output.push(data);
 		      count += 1;
-		      output.push(data);
 		    }
 		    // output.push(data);
 
