@@ -1,7 +1,7 @@
 "use strict";
 var fs = require('fs');
 
-fs.readFile("./csvInput/pfwtimes.csv", 'utf8', function (err,data) {
+fs.readFile("./csvInput/pwftimes.csv", 'utf8', function (err,data) {
   if (err) {
     return console.log(err);
   }
