@@ -6,6 +6,7 @@ var stream = csv({
 	separator: '|'
 })
 
+
 var output = [];
 var currentProject;
 var currentProjectStatus;
