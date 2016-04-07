@@ -1,4 +1,5 @@
 "use strict";
+
 var fs = require('fs');
 
 fs.readFile("./csvInput/pwftimes.csv", 'utf8', function (err,data) {
@@ -6,7 +7,7 @@ fs.readFile("./csvInput/pwftimes.csv", 'utf8', function (err,data) {
     return console.log(err);
   }
   var result = data.replace(/"/g, '');
-  fs.writeFile("./csvInput/pfwtimes_noQuotes.csv", result, 'utf8', function (err,data) {
+  fs.writeFile("./csvInput/pwftimes_noQuotes.csv", result, 'utf8', function (err,data) {
     if (err) return console.log(err);
     var csv = require('csv-parser');
 		var fastcsv = require('fast-csv');
