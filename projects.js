@@ -10,7 +10,7 @@ var output = [];
 var currentProject;
 var count = 0;
 
-fs.createReadStream('./csvInput/pfwprojects.csv')
+fs.createReadStream('./csvInput/pwfprojects.csv')
   .pipe(stream)
   .on('data', function(data) {
   	if(data['ROW TYPE'] === 'PROJECT') {
