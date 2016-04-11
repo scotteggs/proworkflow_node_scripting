@@ -30,7 +30,7 @@ fs.readFile("./csvInput/pwftimes.csv", 'utf8', function (err,data) {
 		var newObject;
 
 
-		fs.createReadStream('./csvInput/pfwtimes_noQuotes.csv')
+		fs.createReadStream('./csvInput/pwftimes_noQuotes.csv')
 		  .pipe(stream)
 		  .on('data', function(data) {
 		    if(data['ROW TYPE'] === 'PROJECT') {
