@@ -57,7 +57,7 @@ fs.readFile("./csvInput/expenses_download.csv", 'utf8', function (err,data) {
 	  	//create output data stream using fast-csv library
 	    var outputStream = fastcsv.createWriteStream({headers: true});
 	    //declare path for final output file
-	    var writableStream = fs.createWriteStream("./csvOutput/expensesOutput.csv");
+	    var writableStream = fs.createWriteStream("../../Google Drive/Adoptive Budget System/Budget System Data/expensesOutput.csv");
 	    outputStream.pipe(writableStream);
 	    for (var row in output) {
 	      outputStream.write(output[row]);
