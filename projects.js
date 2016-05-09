@@ -40,7 +40,7 @@ fs.createReadStream('./csvInput/pwfprojects.csv')
     console.log(output[10]);
     console.log("Number of Records: " + count);
   	var outputStream = fastcsv.createWriteStream({headers: true}),
-  		writableStream = fs.createWriteStream("./csvOutput/projectOutput.csv");
+  		writableStream = fs.createWriteStream("../../Google Drive/Adoptive Budget System/Budget System Data/projectOutput.csv");
 
   	outputStream.pipe(writableStream);
     for (var row in output) {
