@@ -1,23 +1,21 @@
 "use strict";
 
 var fs = require('fs');
-
-fs.readFile("./csvInput/pwftimes.csv", 'utf8', function (err,data) {
-  if (err) {
-    return console.log(err);
-  }
+var csv = require('csv-parser');
+var fastcsv = require('fast-csv');
+var moment = require('moment');
+//read file into memory for quote removal
+fs.readFile('./csvInput/pwftimes.csv', 'utf8', function (err,data) {
+  if (err) return console.log(err);
+  //remove all double quotes from file
   var result = data.replace(/"/g, '');
-  fs.writeFile("./csvInput/pwftimes_noQuotes.csv", result, 'utf8', function (err,data) {
+  //save new version of file
+  fs.writeFile('./csvInput/pwftimes_noQuotes.csv', result, 'utf8', function (err,data) {
     if (err) return console.log(err);
-    var csv = require('csv-parser');
-		var fastcsv = require('fast-csv');
-		var fs = require('fs');
-		var moment = require('moment');
-
+		
 		var stream = csv({
 		  separator: '|'
-		})
-
+		});
 		var output = [];
 		var currentJobID;
 		var currentJobName;
