@@ -35,14 +35,14 @@ fs.readFile('./csvInput/pwftimes.csv', 'utf8', function (err,data) {
 		    	currentTaskPhase = "None";
 		      currentJobID = data['JOBID'];
 		      currentJobName = data['JOBNUMBER'];
-		      currentJobTitle = data['JOBTITLE'];
+		      currentJobTitle = data['JOBTITLE'].trim();
 		      currentProjectActive = data['JOBCOMPLETE'];
 
 		    } else if (data['ROW TYPE'] === 'TASK'){
 		    	if(data['TASKASSIGNEDTO'] === "5") {
-		    		currentTaskPhase = data['JOBTITLE'];
+		    		currentTaskPhase = data['JOBTITLE'].trim();
 		    	} else {
-		    		currentTaskTitle = data['JOBTITLE'];
+		    		currentTaskTitle = data['JOBTITLE'].trim();
 		      	currentTaskOrder = data['TASKTITLE'];
 		    	}
 
@@ -74,10 +74,10 @@ fs.readFile('./csvInput/pwftimes.csv', 'utf8', function (err,data) {
 		      newObject.NOTES = data['TRACKERNOTES'];
 		      newObject.JOB_ID = currentJobID;
 		      newObject.JOB_NAME = currentJobName;
-		      newObject.JOB_TITLE = currentJobTitle;
+		      newObject.JOB_TITLE = "'" + currentJobTitle;
 		      newObject.TASK_PHASE = currentTaskPhase;
 		      newObject.TASK_ORDER = currentTaskOrder;
-		      newObject.TASK_TITLE = currentTaskTitle;
+		      newObject.TASK_TITLE = "'" + currentTaskTitle;
 		      output.push(newObject);
 		      count += 1;
 		    }

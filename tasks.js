@@ -32,12 +32,12 @@ fs.readFile('./csvInput/pwftasks.csv', 'utf8', function (err,data) {
         if(data['ROW TYPE'] === 'PROJECT') {
           jobID = data['JOBID'];
           jobNumber = data['JOBNUMBER']
-          jobTitle = data['JOBTITLE']
+          jobTitle = data['JOBTITLE'].trim();
           jobStatus = data['JOBCOMPLETE'];
           jobPhase = 'None';
         } 
         else if(data['ROW TYPE'] == 'TASK' && data['TASKSTATUS'] == 5) {
-          jobPhase = data['TASKPRIORITY']
+          jobPhase = data['TASKPRIORITY'].trim()
         }
         else if(data['ROW TYPE'] === 'TASK' && data['TASKSTATUS'] != 5) {
           //create new object with properties from each entry
@@ -45,7 +45,7 @@ fs.readFile('./csvInput/pwftasks.csv', 'utf8', function (err,data) {
           newObj['KEY'] = jobID+" | "+jobNumber+" | "+jobTitle+" | "+data['JOBCOMPLETE']+" | "+jobPhase+" | "+data['TASKPRIORITY'];
           newObj['JOBSTATUS'] = jobStatus;
           newObj['JOBID'] = jobID;
-          newObj['JOBTITLE'] = jobTitle;
+          newObj['JOBTITLE'] = "'" + jobTitle;
           newObj['JOBPHASE'] = jobPhase;
           newObj['TASKORDER'] = data['JOBCOMPLETE'];
           newObj['TASKSTATUS'] = data['TASKORDER'];
