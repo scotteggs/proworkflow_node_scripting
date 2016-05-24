@@ -50,7 +50,7 @@ fs.readFile('./csvInput/pwftasks.csv', 'utf8', function (err,data) {
           newObj['TASKORDER'] = data['JOBCOMPLETE'];
           newObj['TASKSTATUS'] = data['TASKORDER'];
           newObj['TASKPRIORITY'] = data['TASKSTATUS'];
-          newObj['TASKTITLE'] = "'" + data['TASKPRIORITY'];
+          newObj['TASKTITLE'] = "'" + data['TASKPRIORITY'].trim();
           output.push(newObj);
           count += 1;
         }
