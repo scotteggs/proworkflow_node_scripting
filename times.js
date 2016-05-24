@@ -100,7 +100,7 @@ fs.readFile('./csvInput/pwftimes.csv', 'utf8', function (err,data) {
 
 				output.sort(compare);
 
-		  	for (let i = 5400; i < 5500; i++) {
+		  	for (var i = 5400; i < 5500; i++) {
 		  			console.log(output[i]);
 		  	}
 		  	console.log(output[output.length-1]);
@@ -113,7 +113,9 @@ fs.readFile('./csvInput/pwftimes.csv', 'utf8', function (err,data) {
 		      outputStream.write(output[row]);
 		    }
 		  })
+		  fs.unlink('./csvInput/pwftimes_noQuotes.csv');
   });
+
 });
 
 

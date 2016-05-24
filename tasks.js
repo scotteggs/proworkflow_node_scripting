@@ -50,16 +50,16 @@ fs.readFile('./csvInput/pwftasks.csv', 'utf8', function (err,data) {
           newObj['TASKORDER'] = data['JOBCOMPLETE'];
           newObj['TASKSTATUS'] = data['TASKORDER'];
           newObj['TASKPRIORITY'] = data['TASKSTATUS'];
-          newObj['TASKTITLE'] = data['TASKPRIORITY'];
+          newObj['TASKTITLE'] = "'" + data['TASKPRIORITY'];
           output.push(newObj);
           count += 1;
         }
       })
       .on('end', function () {
         console.log(output[1]);
-        console.log(output[350]);
-        console.log(output[566]);
-        console.log(output[1245]);
+        console.log(output[234]);
+        console.log(output[235]);
+        console.log(output[236]);
         console.log("Number of Records: " + count);
         var outputStream = fastcsv.createWriteStream({headers: true}),
           writableStream = fs.createWriteStream("../../Google Drive/Adoptive Budget System/Budget System Data/taskOutput.csv");
@@ -68,7 +68,7 @@ fs.readFile('./csvInput/pwftasks.csv', 'utf8', function (err,data) {
           outputStream.write(output[row]);
         }
       })
-
+      fs.unlink('./csvInput/pwftasks_noQuotes.csv');
 
 
   })
