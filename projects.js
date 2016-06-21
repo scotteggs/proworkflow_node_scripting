@@ -30,15 +30,14 @@ fs.createReadStream('./csvInput/pwfprojects.csv')
       delete data['JOBDESCRIPTION'];
       delete data['JOBNOTES'];
       delete data['JOBPRIORITY'];
-      delete data['JOBCOMPLETE'];
       delete data[''];
       output.push(data);
       count += 1;
   	} 
   })
   .on('end', function () {
-    console.log(output[10]);
     console.log("Number of Records: " + count);
+    console.log(output[23]);
   	var outputStream = fastcsv.createWriteStream({headers: true}),
   		writableStream = fs.createWriteStream("../../Google Drive/Adoptive Budget System/Budget System Data/projectOutput.csv");
 
