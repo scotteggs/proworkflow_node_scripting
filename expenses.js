@@ -35,7 +35,7 @@ fs.readFile("./csvInput/expenses_download.csv", 'utf8', function (err,data) {
 				positionEnd = data['Account'].indexOf(' ',positionStart);
 				data['Project'] = data['Account'].slice(positionStart+1,positionEnd);
 				//create unique identifier from project number and invoice number ('Name')
-				newObj['Key'] = data['Project'] + "_" + data['Name'];
+				newObj['Key'] = data['Project'] + "_" + data['Name'] + data['Amount'] + data['Client'] + data['Memo/Description'];
 				//create remaining fields
 				newObj['Project'] = data['Project'];
 				newObj['Invoice'] = data['Name'];
